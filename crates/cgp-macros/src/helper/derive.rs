@@ -37,5 +37,5 @@ pub fn derive_component(attr: TokenStream, item: TokenStream) -> TokenStream {
     output.extend(consumer_impl.to_token_stream());
     output.extend(provider_impl.to_token_stream());
 
-    output.into()
+    output
 }
