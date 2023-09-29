@@ -9,3 +9,4 @@ pub mod replace_self_receiver;
 pub mod replace_self_type;
 pub mod signature_args;
 pub mod snake_case;
+pub mod strip_async;
