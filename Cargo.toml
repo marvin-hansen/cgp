@@ -4,6 +4,7 @@ resolver = "2"
 
 members = [
     "crates/cgp-async",
+    "crates/cgp-sync",
     "crates/cgp-core",
     "crates/cgp-macros",
 ]
