@@ -37,7 +37,7 @@ pub fn derive_consumer_impl(
 
         {
             let has_component_constraint: Punctuated<TypeParamBound, Plus> = parse_quote! {
-                cgp_core::traits::HasComponents
+                cgp_component::HasComponents
             };
 
             let provider_constraint: Punctuated<TypeParamBound, Plus> = parse_quote! {
