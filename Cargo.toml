@@ -10,14 +10,19 @@ members = [
     "crates/cgp-component-macro",
     "crates/cgp-error",
     "crates/cgp-strip-async",
+    "crates/cgp-core",
+    "crates/cgp-core-sync",
 ]
 
 
 [patch.crates-io]
+cgp-core            = { path = "./crates/cgp-core" }
+cgp-core-sync       = { path = "./crates/cgp-core-sync" }
 cgp-async           = { path = "./crates/cgp-async" }
 cgp-sync            = { path = "./crates/cgp-sync" }
 cgp-component       = { path = "./crates/cgp-component" }
 cgp-component-sync  = { path = "./crates/cgp-component-sync" }
 cgp-component-macro = { path = "./crates/cgp-component-macro" }
 cgp-error           = { path = "./crates/cgp-error" }
+cgp-error-sync      = { path = "./crates/cgp-error-sync" }
 cgp-strip-async     = { path = "./crates/cgp-strip-async" }
