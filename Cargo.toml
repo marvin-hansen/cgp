@@ -6,6 +6,7 @@ members = [
     "crates/cgp-async",
     "crates/cgp-sync",
     "crates/cgp-core",
+    "crates/cgp-error",
     "crates/cgp-macros",
     "crates/cgp-strip-async",
 ]

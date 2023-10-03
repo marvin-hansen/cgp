@@ -26,6 +26,13 @@ name = "cgp-core"
 version = "0.1.0"
 
 [[package]]
+name = "cgp-error"
+version = "0.1.0"
+dependencies = [
+ "cgp-async",
+]
+
+[[package]]
 name = "cgp-macros"
 version = "0.1.0"
 dependencies = [
