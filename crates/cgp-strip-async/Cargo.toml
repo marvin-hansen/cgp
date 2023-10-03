@@ -1,5 +1,5 @@
 [package]
-name         = "cgp-sync"
+name         = "cgp-strip-async"
 version      = "0.1.0"
 edition      = "2021"
 license      = "Apache-2.0"
@@ -9,8 +9,18 @@ repository   = "https://github.com/informalsystems/cgp"
 authors      = ["Informal Systems <hello@informal.systems>", "Soares Chen <soares.chen@maybevoid.com>"]
 rust-version = "1.72"
 description  = """
-    Async-generic primitives to support both sync/async in Context-generic programming
+    Context-generic programming core macros
 """
 
+[package.metadata.docs.rs]
+all-features = true
+
+[lib]
+proc-macro = true
+
+[features]
+
 [dependencies]
-cgp-strip-async = { version = "0.1.0", path = "../cgp-strip-async" }
+syn = { version = "2.0.37", features = [ "full" ] }
+quote = "1.0.33"
+proc-macro2 = "1.0.67"

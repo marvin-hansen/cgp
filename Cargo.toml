@@ -7,4 +7,5 @@ members = [
     "crates/cgp-sync",
     "crates/cgp-core",
     "crates/cgp-macros",
+    "crates/cgp-strip-async",
 ]

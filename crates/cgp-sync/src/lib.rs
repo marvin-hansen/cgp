@@ -1,4 +1,4 @@
-pub use cgp_macros::strip_async as async_trait;
+pub use cgp_strip_async::strip_async as async_trait;
 
 pub trait Async {}
 

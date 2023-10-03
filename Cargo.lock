@@ -35,10 +35,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "cgp-strip-async"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "cgp-sync"
 version = "0.1.0"
 dependencies = [
- "cgp-macros",
+ "cgp-strip-async",
 ]
 
 [[package]]
