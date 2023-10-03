@@ -1,4 +1,4 @@
-pub use async_trait::async_trait as async_generic_trait;
+pub use async_trait::async_trait;
 
 /**
    This is defined as a convenient constraint alias to
