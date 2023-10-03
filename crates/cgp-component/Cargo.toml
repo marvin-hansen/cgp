@@ -17,3 +17,4 @@ all-features = true
 
 [dependencies]
 cgp-async = { version = "0.1.0", path = "../cgp-async" }
+cgp-component-macro = { version = "0.1.0", path = "../cgp-component-macro" }
