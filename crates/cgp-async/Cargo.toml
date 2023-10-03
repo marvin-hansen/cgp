@@ -14,4 +14,3 @@ description  = """
 
 [dependencies]
 async-trait = "0.1.73"
-cgp-macros = { version = "0.1.0", path = "../cgp-macros" }
