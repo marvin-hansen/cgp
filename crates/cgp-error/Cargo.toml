@@ -16,4 +16,4 @@ description  = """
 all-features = true
 
 [dependencies]
-cgp-async = { version = "0.1.0", path = "../cgp-async" }
+cgp-async = { version = "0.1.0" }

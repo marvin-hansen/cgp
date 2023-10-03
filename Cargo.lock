@@ -38,6 +38,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "cgp-component-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-component-macro",
+ "cgp-sync",
+]
+
+[[package]]
 name = "cgp-error"
 version = "0.1.0"
 dependencies = [
