@@ -1,3 +1,5 @@
+pub use async_trait::async_trait;
+
 /**
    This is defined as a convenient constraint alias to
    `Sized + Send + Sync + 'static`.

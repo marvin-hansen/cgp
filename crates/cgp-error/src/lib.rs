@@ -1,6 +1,6 @@
 use core::fmt::Debug;
 
-use crate::traits::sync::Async;
+use cgp_async::Async;
 
 /**
    This is used for contexts to declare that they have a _unique_ `Self::Error` type.

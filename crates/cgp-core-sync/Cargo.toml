@@ -1,5 +1,5 @@
 [package]
-name         = "cgp-core"
+name         = "cgp-core-sync"
 version      = "0.1.0"
 edition      = "2021"
 license      = "Apache-2.0"
@@ -16,6 +16,6 @@ description  = """
 all-features = true
 
 [dependencies]
-cgp-async       = { version = "0.1.0" }
-cgp-component   = { version = "0.1.0" }
-cgp-error       = { version = "0.1.0" }
+cgp-async       = { version = "0.1.0", package = "cgp-sync" }
+cgp-component   = { version = "0.1.0", package = "cgp-component-sync" }
+cgp-error       = { version = "0.1.0", package = "cgp-error-sync" }

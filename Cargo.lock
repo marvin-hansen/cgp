@@ -3,16 +3,94 @@
 version = 3
 
 [[package]]
-name = "cgp-core"
-version = "0.1.0"
+name = "async-trait"
+version = "0.1.73"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc00ceb34980c03614e35a3a4e218276a0a824e911d07651cd0d858a51e8c0f0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
-name = "cgp-macros"
+name = "cgp-async"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+]
+
+[[package]]
+name = "cgp-component"
+version = "0.1.0"
+dependencies = [
+ "cgp-async",
+ "cgp-component-macro",
+]
+
+[[package]]
+name = "cgp-component-macro"
 version = "0.1.0"
 dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "cgp-component-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-component-macro",
+ "cgp-sync",
+]
+
+[[package]]
+name = "cgp-core"
+version = "0.1.0"
+dependencies = [
+ "cgp-async",
+ "cgp-component",
+ "cgp-error",
+]
+
+[[package]]
+name = "cgp-core-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-component-sync",
+ "cgp-error-sync",
+ "cgp-sync",
+]
+
+[[package]]
+name = "cgp-error"
+version = "0.1.0"
+dependencies = [
+ "cgp-async",
+]
+
+[[package]]
+name = "cgp-error-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-sync",
+]
+
+[[package]]
+name = "cgp-strip-async"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "cgp-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-strip-async",
 ]
 
 [[package]]

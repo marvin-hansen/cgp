@@ -23,7 +23,7 @@ pub fn derive_provider_impl(
 
         {
             let delegate_constraint: Punctuated<TypeParamBound, Plus> = parse_quote! {
-                cgp_core::traits::DelegateComponent< #component_name < #component_params > >
+                cgp_core::DelegateComponent< #component_name < #component_params > >
             };
 
             let mut provider_generics = provider_trait.generics.clone();

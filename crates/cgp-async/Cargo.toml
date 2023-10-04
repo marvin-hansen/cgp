@@ -1,5 +1,5 @@
 [package]
-name         = "cgp-core"
+name         = "cgp-async"
 version      = "0.1.0"
 edition      = "2021"
 license      = "Apache-2.0"
@@ -9,13 +9,8 @@ repository   = "https://github.com/informalsystems/cgp"
 authors      = ["Informal Systems <hello@informal.systems>", "Soares Chen <soares.chen@maybevoid.com>"]
 rust-version = "1.72"
 description  = """
-    Context-generic programming core traits
+    Async-generic primitives to support both sync/async in Context-generic programming
 """
 
-[package.metadata.docs.rs]
-all-features = true
-
 [dependencies]
-cgp-async       = { version = "0.1.0" }
-cgp-component   = { version = "0.1.0" }
-cgp-error       = { version = "0.1.0" }
+async-trait = "0.1.73"

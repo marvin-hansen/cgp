@@ -1,5 +1,5 @@
 [package]
-name         = "cgp-core"
+name         = "cgp-strip-async"
 version      = "0.1.0"
 edition      = "2021"
 license      = "Apache-2.0"
@@ -9,13 +9,18 @@ repository   = "https://github.com/informalsystems/cgp"
 authors      = ["Informal Systems <hello@informal.systems>", "Soares Chen <soares.chen@maybevoid.com>"]
 rust-version = "1.72"
 description  = """
-    Context-generic programming core traits
+    Context-generic programming core macros
 """
 
 [package.metadata.docs.rs]
 all-features = true
 
+[lib]
+proc-macro = true
+
+[features]
+
 [dependencies]
-cgp-async       = { version = "0.1.0" }
-cgp-component   = { version = "0.1.0" }
-cgp-error       = { version = "0.1.0" }
+syn = { version = "2.0.37", features = [ "full" ] }
+quote = "1.0.33"
+proc-macro2 = "1.0.67"
