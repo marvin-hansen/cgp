@@ -2,7 +2,9 @@
 
 extern crate alloc;
 
+#[allow(unused_imports)]
 use alloc::boxed::Box;
+
 use cgp_async::{async_trait, Async};
 use cgp_component::{derive_component, DelegateComponent, HasComponents};
 use cgp_error::HasErrorType;

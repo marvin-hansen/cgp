@@ -87,6 +87,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "cgp-run-sync"
+version = "0.1.0"
+dependencies = [
+ "cgp-component-sync",
+ "cgp-error-sync",
+ "cgp-sync",
+]
+
+[[package]]
 name = "cgp-strip-async"
 version = "0.1.0"
 dependencies = [

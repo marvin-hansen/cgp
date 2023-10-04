@@ -1,0 +1,21 @@
+[package]
+name         = "cgp-run-sync"
+version      = "0.1.0"
+edition      = "2021"
+license      = "Apache-2.0"
+readme       = "README.md"
+keywords     = ["context-generic programming"]
+repository   = "https://github.com/informalsystems/cgp"
+authors      = ["Informal Systems <hello@informal.systems>", "Soares Chen <soares.chen@maybevoid.com>"]
+rust-version = "1.72"
+description  = """
+    Context-generic programming core traits
+"""
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+cgp-async = { version = "0.1.0", package = "cgp-sync" }
+cgp-error = { version = "0.1.0", package = "cgp-error-sync" }
+cgp-component = { version = "0.1.0", package = "cgp-component-sync" }
