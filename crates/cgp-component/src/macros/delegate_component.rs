@@ -1,8 +1,10 @@
 #[macro_export]
 macro_rules! delegate_component {
-    ( $key:ty, $target:ident $( < $( $param:ident ),* $(,)? > )?, $forwarded:ty $(,)?  ) => {
+    ( $target:ident $( < $( $param:ident ),* $(,)? > )?;
+        $name:ty : $forwarded:ty $(,)?
+    ) => {
         impl< $( $( $param ),* )* >
-            $crate::traits::delegate_component::DelegateComponent<$key>
+            $crate::traits::delegate_component::DelegateComponent< $name >
             for $target $( < $( $param ),* > )*
         where
             Self: $crate::traits::sync::Async,

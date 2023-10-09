@@ -1,10 +1,44 @@
 #[macro_export]
 macro_rules! delegate_components {
-    ( [$(,)?], $target:ident $( < $( $param:ident ),* $(,)? > )?, $forwarded:ty $(,)? ) => {
+    ( $target:ident $( < $( $param:ident ),* $(,)? > )? ; ) => {
 
     };
-    ( [$name:ty $(, $($rest:tt)* )?], $target:ident $( < $( $param:ident ),* $(,)? > )?, $forwarded:ty $(,)?  ) => {
-        $crate::delegate_component!($name, $target $( < $( $param ),* > )*, $forwarded);
-        $crate::delegate_components!([ $( $($rest)* )? ], $target $( < $( $param ),* > )*, $forwarded);
+    (   $target:ident $( < $( $param:ident ),* $(,)? > )?;
+        [ ] : $forwarded:ty
+        $( , $( $rest:tt )* )?
+    ) => {
+        $crate::delegate_components!(
+            $target $( < $( $param ),* > )* ;
+            $( $( $rest )*  )?
+        );
+    };
+    ( $target:ident $( < $( $param:ident ),* $(,)? > )? ;
+        [ $name:ty $(, $($names:tt)* )?] : $forwarded:ty
+        $( , $( $rest:tt )* )?
+    ) => {
+        $crate::delegate_component!(
+            $target $( < $( $param ),* > )*;
+            $name : $forwarded
+        );
+
+        $crate::delegate_components!(
+            $target $( < $( $param ),* > )* ;
+            [ $( $( $names )* )? ] : $forwarded
+            $( , $( $rest )*  )?
+        );
+    };
+    (   $target:ident $( < $( $param:ident ),* $(,)? > )? ;
+        $name:ty : $forwarded:ty
+        $( , $( $rest:tt )* )?
+    ) => {
+        $crate::delegate_component!(
+            $target $( < $( $param ),* > )*;
+            $name : $forwarded
+        );
+
+        $crate::delegate_components!(
+            $target $( < $( $param ),* > )* ;
+            $( $( $rest )*  )?
+        );
     };
 }
