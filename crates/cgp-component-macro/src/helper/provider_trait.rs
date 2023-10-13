@@ -22,10 +22,25 @@ pub fn derive_provider_trait(
             .insert(0, parse_quote!(#context_type));
     }
 
+    let local_assoc_types: Vec<Ident> = provider_trait
+        .items
+        .iter()
+        .filter_map(|item| {
+            if let TraitItem::Type(assoc_type) = item {
+                Some(assoc_type.ident.clone())
+            } else {
+                None
+            }
+        })
+        .collect();
+
     // Turn the supertrait constraints into `Context` constraints in the `where` clause
     {
-        let context_constraints =
-            iter_parse_and_replace_self_type(provider_trait.supertraits.clone(), context_type)?;
+        let context_constraints = iter_parse_and_replace_self_type(
+            provider_trait.supertraits.clone(),
+            context_type,
+            &local_assoc_types,
+        )?;
 
         provider_trait.supertraits = parse_quote!(Async);
 
@@ -34,6 +49,7 @@ pub fn derive_provider_trait(
                 let mut predicates = iter_parse_and_replace_self_type(
                     where_clause.predicates.clone(),
                     context_type,
+                    &local_assoc_types,
                 )?;
 
                 predicates.push(parse_quote! {
@@ -52,7 +68,8 @@ pub fn derive_provider_trait(
     // Replace self type and argument into context type argument
     {
         for item in provider_trait.items.iter_mut() {
-            let mut replaced_item = parse_and_replace_self_type(item, context_type)?;
+            let mut replaced_item =
+                parse_and_replace_self_type(item, context_type, &local_assoc_types)?;
 
             if let TraitItem::Fn(func) = &mut replaced_item {
                 replace_self_receiver(func, context_type);
