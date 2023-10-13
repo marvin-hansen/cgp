@@ -72,7 +72,7 @@ pub fn derive_consumer_impl(
         impl_generics
     };
 
-    let mut impl_fns: Vec<ImplItem> = Vec::new();
+    let mut impl_items: Vec<ImplItem> = Vec::new();
 
     for trait_item in consumer_trait.items.iter() {
         match trait_item {
@@ -82,7 +82,7 @@ pub fn derive_consumer_impl(
                     &parse_quote!(#context_type :: Components),
                 );
 
-                impl_fns.push(ImplItem::Fn(impl_fn));
+                impl_items.push(ImplItem::Fn(impl_fn));
             }
             TraitItem::Type(trait_type) => {
                 let type_name = &trait_type.ident;
@@ -92,12 +92,14 @@ pub fn derive_consumer_impl(
                     type_generics
                 };
 
-                derive_delegate_type_impl(
+                let impl_type = derive_delegate_type_impl(
                     &trait_type,
                     parse_quote!(
                         < #context_type :: Components as #provider_name #provider_generics > :: #type_name #type_generics
                     ),
                 );
+
+                impl_items.push(ImplItem::Type(impl_type));
             }
             _ => {}
         }
@@ -119,6 +121,6 @@ pub fn derive_consumer_impl(
         trait_: Some((None, trait_path, For::default())),
         self_ty: Box::new(parse_quote!(#context_type)),
         brace_token: Brace::default(),
-        items: impl_fns,
+        items: impl_items,
     }
 }
