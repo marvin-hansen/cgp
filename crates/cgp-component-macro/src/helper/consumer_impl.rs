@@ -3,6 +3,7 @@ use syn::token::{Brace, For, Impl, Plus};
 use syn::{parse_quote, Ident, ImplItem, ItemImpl, ItemTrait, Path, TraitItem, TypeParamBound};
 
 use crate::helper::delegate_fn::derive_delegated_fn_impl;
+use crate::helper::delegate_type::derive_delegate_type_impl;
 
 pub fn derive_consumer_impl(
     consumer_trait: &ItemTrait,
@@ -11,13 +12,20 @@ pub fn derive_consumer_impl(
 ) -> ItemImpl {
     let consumer_name = &consumer_trait.ident;
 
+    let provider_generics = {
+        let mut provider_generics = consumer_trait.generics.clone();
+        provider_generics
+            .params
+            .insert(0, parse_quote!(#context_type));
+        provider_generics.where_clause = None;
+
+        provider_generics
+    };
+
     let impl_generics = {
         let mut impl_generics = consumer_trait.generics.clone();
 
         impl_generics.params.insert(0, parse_quote!(#context_type));
-
-        let mut provider_generics = impl_generics.clone();
-        provider_generics.where_clause = None;
 
         {
             let supertrait_constraints = consumer_trait.supertraits.clone();
@@ -67,11 +75,31 @@ pub fn derive_consumer_impl(
     let mut impl_fns: Vec<ImplItem> = Vec::new();
 
     for trait_item in consumer_trait.items.iter() {
-        if let TraitItem::Fn(trait_fn) = trait_item {
-            let impl_fn =
-                derive_delegated_fn_impl(&trait_fn.sig, &parse_quote!(#context_type :: Components));
+        match trait_item {
+            TraitItem::Fn(trait_fn) => {
+                let impl_fn = derive_delegated_fn_impl(
+                    &trait_fn.sig,
+                    &parse_quote!(#context_type :: Components),
+                );
 
-            impl_fns.push(ImplItem::Fn(impl_fn))
+                impl_fns.push(ImplItem::Fn(impl_fn));
+            }
+            TraitItem::Type(trait_type) => {
+                let type_name = &trait_type.ident;
+                let type_generics = {
+                    let mut type_generics = trait_type.generics.clone();
+                    type_generics.where_clause = None;
+                    type_generics
+                };
+
+                derive_delegate_type_impl(
+                    &trait_type,
+                    parse_quote!(
+                        < #context_type :: Components as #provider_name #provider_generics > :: #type_name #type_generics
+                    ),
+                );
+            }
+            _ => {}
         }
     }
 

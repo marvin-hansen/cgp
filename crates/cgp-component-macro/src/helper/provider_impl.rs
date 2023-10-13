@@ -4,6 +4,7 @@ use syn::token::{Brace, Comma, For, Impl, Plus};
 use syn::{parse_quote, Ident, ImplItem, ItemImpl, ItemTrait, Path, TraitItem, TypeParamBound};
 
 use crate::helper::delegate_fn::derive_delegated_fn_impl;
+use crate::helper::delegate_type::derive_delegate_type_impl;
 
 pub fn derive_provider_impl(
     provider_trait: &ItemTrait,
@@ -13,6 +14,12 @@ pub fn derive_provider_impl(
     let provider_name = &provider_trait.ident;
 
     let component_type = Ident::new("Component", Span::call_site());
+
+    let provider_generics = {
+        let mut provider_generics = provider_trait.generics.clone();
+        provider_generics.where_clause = None;
+        provider_generics
+    };
 
     let impl_generics = {
         let mut impl_generics = provider_trait.generics.clone();
@@ -25,9 +32,6 @@ pub fn derive_provider_impl(
             let delegate_constraint: Punctuated<TypeParamBound, Plus> = parse_quote! {
                 DelegateComponent< #component_name < #component_params > >
             };
-
-            let mut provider_generics = provider_trait.generics.clone();
-            provider_generics.where_clause = None;
 
             let provider_constraint: Punctuated<TypeParamBound, Plus> = parse_quote! {
                 #provider_name #provider_generics
@@ -56,11 +60,31 @@ pub fn derive_provider_impl(
     let mut impl_fns: Vec<ImplItem> = Vec::new();
 
     for trait_item in provider_trait.items.iter() {
-        if let TraitItem::Fn(trait_fn) = trait_item {
-            let impl_fn =
-                derive_delegated_fn_impl(&trait_fn.sig, &parse_quote!(#component_type :: Delegate));
+        match trait_item {
+            TraitItem::Fn(trait_fn) => {
+                let impl_fn = derive_delegated_fn_impl(
+                    &trait_fn.sig,
+                    &parse_quote!(#component_type :: Delegate),
+                );
 
-            impl_fns.push(ImplItem::Fn(impl_fn))
+                impl_fns.push(ImplItem::Fn(impl_fn))
+            }
+            TraitItem::Type(trait_type) => {
+                let type_name = &trait_type.ident;
+                let type_generics = {
+                    let mut type_generics = trait_type.generics.clone();
+                    type_generics.where_clause = None;
+                    type_generics
+                };
+
+                derive_delegate_type_impl(
+                    &trait_type,
+                    parse_quote!(
+                        < #component_type :: Delegate as #provider_name #provider_generics > :: #type_name #type_generics
+                    ),
+                );
+            }
+            _ => {}
         }
     }
 
