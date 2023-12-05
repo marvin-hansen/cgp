@@ -53,6 +53,7 @@ dependencies = [
  "cgp-async",
  "cgp-component",
  "cgp-error",
+ "cgp-inner",
  "cgp-run",
 ]
 
@@ -62,6 +63,7 @@ version = "0.1.0"
 dependencies = [
  "cgp-component-sync",
  "cgp-error-sync",
+ "cgp-inner-sync",
  "cgp-run-sync",
  "cgp-sync",
 ]
