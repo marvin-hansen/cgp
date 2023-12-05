@@ -14,8 +14,9 @@ members = [
     "crates/cgp-core-sync",
     "crates/cgp-run",
     "crates/cgp-run-sync",
+    "crates/cgp-inner",
+    "crates/cgp-inner-sync",
 ]
-
 
 [patch.crates-io]
 cgp-strip-async     = { path = "./crates/cgp-strip-async" }
@@ -30,3 +31,5 @@ cgp-error           = { path = "./crates/cgp-error" }
 cgp-error-sync      = { path = "./crates/cgp-error-sync" }
 cgp-run             = { path = "./crates/cgp-run" }
 cgp-run-sync        = { path = "./crates/cgp-run-sync" }
+cgp-inner           = { path = "./crates/cgp-inner" }
+cgp-inner-sync      = { path = "./crates/cgp-inner-sync" }
