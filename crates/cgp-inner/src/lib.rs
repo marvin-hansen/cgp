@@ -9,5 +9,5 @@ use cgp_component::{derive_component, DelegateComponent, HasComponents};
 pub trait HasInner: Async {
     type Inner: Async;
 
-    fn inner(&self) -> Self::Inner;
+    fn inner(&self) -> &Self::Inner;
 }
