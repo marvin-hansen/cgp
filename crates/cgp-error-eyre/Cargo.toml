@@ -1,0 +1,17 @@
+[package]
+name         = "cgp-error-eyre"
+version      = "0.1.0"
+edition      = "2021"
+license      = "Apache-2.0"
+readme       = "README.md"
+keywords     = ["context-generic programming"]
+repository   = "https://github.com/informalsystems/cgp"
+authors      = ["Informal Systems <hello@informal.systems>", "Soares Chen <soares.chen@maybevoid.com>"]
+rust-version = "1.72"
+description  = """
+    Context-generic programming core traits
+"""
+
+[dependencies]
+cgp-core    = { version = "0.1.0" }
+eyre        = { version = "0.6.11" }
