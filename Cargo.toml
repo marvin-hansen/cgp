@@ -6,30 +6,21 @@ members = [
     "crates/cgp-async",
     "crates/cgp-sync",
     "crates/cgp-component",
-    "crates/cgp-component-sync",
     "crates/cgp-component-macro",
     "crates/cgp-error",
     "crates/cgp-strip-async",
     "crates/cgp-core",
-    "crates/cgp-core-sync",
     "crates/cgp-run",
-    "crates/cgp-run-sync",
     "crates/cgp-inner",
-    "crates/cgp-inner-sync",
 ]
 
 [patch.crates-io]
 cgp-strip-async     = { path = "./crates/cgp-strip-async" }
 cgp-core            = { path = "./crates/cgp-core" }
-cgp-core-sync       = { path = "./crates/cgp-core-sync" }
 cgp-async           = { path = "./crates/cgp-async" }
 cgp-sync            = { path = "./crates/cgp-sync" }
 cgp-component       = { path = "./crates/cgp-component" }
-cgp-component-sync  = { path = "./crates/cgp-component-sync" }
 cgp-component-macro = { path = "./crates/cgp-component-macro" }
 cgp-error           = { path = "./crates/cgp-error" }
-cgp-error-sync      = { path = "./crates/cgp-error-sync" }
 cgp-run             = { path = "./crates/cgp-run" }
-cgp-run-sync        = { path = "./crates/cgp-run-sync" }
 cgp-inner           = { path = "./crates/cgp-inner" }
-cgp-inner-sync      = { path = "./crates/cgp-inner-sync" }
