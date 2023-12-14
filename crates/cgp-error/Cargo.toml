@@ -12,8 +12,6 @@ description  = """
     Context-generic programming core traits
 """
 
-[package.metadata.docs.rs]
-all-features = true
-
 [dependencies]
-cgp-async = { version = "0.1.0" }
+cgp-async       = { version = "0.1.0" }
+cgp-component   = { version = "0.1.0" }

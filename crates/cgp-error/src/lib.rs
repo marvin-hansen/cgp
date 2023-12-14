@@ -1,6 +1,7 @@
 use core::fmt::Debug;
 
 use cgp_async::Async;
+use cgp_component::{derive_component, DelegateComponent, HasComponents};
 
 /**
    This is used for contexts to declare that they have a _unique_ `Self::Error` type.
@@ -13,6 +14,7 @@ use cgp_async::Async;
    parent traits, so that multiple traits can all refer to the same abstract
    `Self::Error` type.
 */
+#[derive_component(ErrorTypeComponent, ProvideErrorType<Context>)]
 pub trait HasErrorType: Async {
     /**
        The `Error` associated type is also required to implement [`Debug`].
@@ -31,6 +33,7 @@ pub trait HasErrorType: Async {
    [`err: ParseIntError`](core::num::ParseIntError) and get back
    a [`Context::Error`](HasErrorType::Error) value.
 */
+#[derive_component(ErrorRaiserComponent, ErrorRaiser<Context>)]
 pub trait CanRaiseError<E>: HasErrorType {
-    fn raise_error(err: E) -> Self::Error;
+    fn raise_error(e: E) -> Self::Error;
 }
