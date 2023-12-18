@@ -8,6 +8,8 @@ members = [
     "crates/cgp-component",
     "crates/cgp-component-macro",
     "crates/cgp-error",
+    "crates/cgp-error-eyre",
+    "crates/cgp-error-std",
     "crates/cgp-strip-async",
     "crates/cgp-core",
     "crates/cgp-run",

@@ -8,7 +8,10 @@ pub use cgp_component::{
 
 pub use cgp_async::{async_trait, Async};
 
-pub use cgp_error::{CanRaiseError, HasErrorType};
+pub use cgp_error::{
+    CanRaiseError, ErrorRaiser, ErrorRaiserComponent, ErrorTypeComponent, HasErrorType,
+    ProvideErrorType,
+};
 
 pub use cgp_run::{CanRun, Runner, RunnerComponent};
 
