@@ -3,12 +3,4 @@
 pub mod prelude;
 
 pub use cgp_async::{async_trait, Async};
-pub use cgp_component::{
-    define_components, delegate_components, derive_component, DelegateComponent, HasComponents,
-};
-pub use cgp_error::{
-    CanRaiseError, ErrorRaiser, ErrorRaiserComponent, ErrorTypeComponent, HasErrorType,
-    ProvideErrorType,
-};
-pub use cgp_inner::{HasInner, InnerComponent, ProvideInner};
-pub use cgp_run::{CanRun, Runner, RunnerComponent};
+pub use {cgp_component as component, cgp_error as error, cgp_inner as inner, cgp_run as run};
