@@ -2,9 +2,12 @@
 
 extern crate alloc;
 
-use cgp_component::{derive_component, DelegateComponent, HasComponents};
+use cgp_component::{cgp_component, DelegateComponent, HasComponents};
 
-#[derive_component(InnerComponent, ProvideInner<Context>)]
+#[cgp_component {
+    name: InnerComponent,
+    provider: ProvideInner,
+}]
 pub trait HasInner {
     type Inner;
 
