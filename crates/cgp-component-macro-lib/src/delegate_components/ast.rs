@@ -5,17 +5,11 @@ use quote::ToTokens;
 use syn::parse::{Parse, ParseStream};
 use syn::punctuated::Punctuated;
 use syn::token::{Bracket, Colon, Comma, Lt};
-use syn::{braced, bracketed, Generics, Ident, Token, Type};
+use syn::{braced, bracketed, Generics, Token, Type};
 
 pub struct DelegateComponentsAst {
     pub target_type: Type,
     pub target_generics: Generics,
-    pub delegate_entries: DelegateEntriesAst,
-}
-
-pub struct DefineComponentsAst {
-    pub components_ident: Ident,
-    pub components_generics: Generics,
     pub delegate_entries: DelegateEntriesAst,
 }
 
@@ -58,26 +52,6 @@ impl Parse for DelegateComponentsAst {
         Ok(Self {
             target_type,
             target_generics,
-            delegate_entries,
-        })
-    }
-}
-
-impl Parse for DefineComponentsAst {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        let components_ident: Ident = input.parse()?;
-
-        let components_generics = if input.peek(Lt) {
-            input.parse()?
-        } else {
-            Default::default()
-        };
-
-        let delegate_entries: DelegateEntriesAst = input.parse()?;
-
-        Ok(Self {
-            components_ident,
-            components_generics,
             delegate_entries,
         })
     }

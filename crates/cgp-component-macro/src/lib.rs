@@ -13,10 +13,28 @@ pub fn cgp_component(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 #[proc_macro]
 pub fn delegate_components(body: TokenStream) -> TokenStream {
-    cgp_component_macro_lib::delegate_components(body.into()).into()
+    cgp_component_macro_lib::delegate_components(body.into())
+        .unwrap()
+        .into()
 }
 
 #[proc_macro]
-pub fn define_components(body: TokenStream) -> TokenStream {
-    cgp_component_macro_lib::define_components(body.into()).into()
+pub fn cgp_preset(body: TokenStream) -> TokenStream {
+    cgp_component_macro_lib::define_preset(body.into())
+        .unwrap()
+        .into()
+}
+
+#[proc_macro]
+pub fn for_each_replace(body: TokenStream) -> TokenStream {
+    cgp_component_macro_lib::handle_for_each_replace(body.into())
+        .unwrap()
+        .into()
+}
+
+#[proc_macro]
+pub fn replace_with(body: TokenStream) -> TokenStream {
+    cgp_component_macro_lib::handle_replace(body.into())
+        .unwrap()
+        .into()
 }
