@@ -3,6 +3,14 @@
    proc macros for `cgp-component` as a library, so that it can be more easily tested.
    The constructs are then re-exported as proc macros in the `cgp-component-macro` crate,
    which is defined as a proc macro crate.
+
+   # Overview
+   This crate provides the core implementation for component-based programming macros.
+   It includes functionality for:
+   - Delegating component implementations
+   - Deriving component traits
+   - Pattern replacement utilities
+   - Preset component definitions
 */
 
 pub mod delegate_components;

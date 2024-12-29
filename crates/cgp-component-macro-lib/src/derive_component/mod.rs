@@ -1,3 +1,9 @@
+/// Module for deriving component implementations.
+///
+/// This module contains the core functionality for deriving component implementations
+/// in the CGP (Component-based Generic Programming) framework. It handles both provider
+/// and consumer implementations, along with various utility functions for processing
+/// component specifications and type manipulations.
 pub mod component_name;
 pub mod component_spec;
 pub mod consumer_impl;

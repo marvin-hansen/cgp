@@ -1,3 +1,4 @@
+/// Specification parsing for component attributes and names.
 use proc_macro2::Span;
 use quote::ToTokens;
 use syn::parse::{Parse, ParseStream};
@@ -7,18 +8,44 @@ use syn::{Error, Ident};
 
 use crate::derive_component::entry::Entries;
 
+/// Specification for a component, containing all necessary information for generation.
+///
+/// This structure holds the parsed information from a component attribute macro,
+/// including provider details, context type, and component naming information.
+#[derive(Debug)]
 pub struct ComponentSpec {
+    /// Name of the provider trait that will be generated
     pub provider_name: Ident,
+    /// Type of context used in the component
     pub context_type: Ident,
+    /// Name of the component struct that will be generated
     pub component_name: Ident,
+    /// Generic parameters for the component
     pub component_params: Punctuated<Ident, Comma>,
 }
 
+/// Specification for a component's name and its generic parameters.
+///
+/// This structure represents the parsed form of a component name declaration,
+/// which may include generic parameters.
+#[derive(Debug)]
 pub struct ComponentNameSpec {
+    /// Name of the component
     pub component_name: Ident,
+    /// Generic parameters for the component
     pub component_params: Punctuated<Ident, Comma>,
 }
 
+/// Parser implementation for ComponentSpec
+///
+/// Parses component specifications in the format:
+/// ```ignore
+/// #[component(
+///     provider = MyProvider,
+///     context = MyContext,
+///     name = MyComponent<T, U>
+/// )]
+/// ```
 impl Parse for ComponentSpec {
     fn parse(input: ParseStream) -> syn::Result<Self> {
         let Entries { entries } = input.parse()?;
@@ -67,6 +94,16 @@ impl Parse for ComponentSpec {
     }
 }
 
+/// Parser implementation for ComponentNameSpec
+///
+/// Parses component names in the format:
+/// ```ignore
+/// MyComponent<T, U>
+/// ```
+/// or just:
+/// ```ignore
+/// MyComponent
+/// ```
 impl Parse for ComponentNameSpec {
     fn parse(input: ParseStream) -> syn::Result<Self> {
         let component_name: Ident = input.parse()?;

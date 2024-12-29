@@ -1,3 +1,7 @@
+/// Functions for defining component presets in the CGP framework.
+///
+/// This module provides the core functionality for defining presets, which are
+/// reusable component configurations that can be applied to different types.
 use proc_macro2::{Span, TokenStream};
 use quote::ToTokens;
 use syn::{parse_quote, Ident, ItemTrait};
@@ -10,6 +14,38 @@ use crate::preset::ast::DefinePresetAst;
 use crate::preset::impl_is_preset::impl_components_is_preset;
 use crate::preset::substitution_macro::define_substitution_macro;
 
+/// Defines a new component preset.
+///
+/// This function processes a preset definition and generates all the necessary
+/// code for implementing the preset, including:
+/// - The preset struct definition
+/// - The preset trait and its implementations
+/// - Delegation trait implementations
+/// - Helper macros for working with the preset
+///
+/// # Arguments
+///
+/// * `body` - Token stream containing the preset definition
+///
+/// # Returns
+///
+/// Returns a `Result` containing the generated token stream if successful,
+/// or a syntax error if parsing fails.
+///
+/// # Examples
+///
+/// For a preset definition like:
+/// ```text
+/// MyPreset<T> {
+///     [ComponentA, ComponentB]: Inner<T>
+/// }
+/// ```
+///
+/// This function generates:
+/// - A struct `MyPreset<T>`
+/// - A trait `IsMyPreset<Component>`
+/// - Implementation of component delegation
+/// - A `with_my_preset` macro for type substitution
 pub fn define_preset(body: TokenStream) -> syn::Result<TokenStream> {
     let ast: DefinePresetAst = syn::parse2(body)?;
 

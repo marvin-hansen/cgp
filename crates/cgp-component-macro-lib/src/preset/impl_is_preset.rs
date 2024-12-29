@@ -1,7 +1,27 @@
+/// Implementation generation for preset trait bounds.
+///
+/// This module provides functionality for generating trait implementations that
+/// establish the relationship between presets and their component types.
 use syn::{parse_quote, Generics, Ident, ItemImpl, Type};
 
 use crate::delegate_components::ast::{ComponentAst, DelegateEntriesAst};
 
+/// Generates implementations of the preset trait for all components.
+///
+/// Creates trait implementations that establish which components are part
+/// of a preset, allowing the preset to be used with those component types.
+///
+/// # Arguments
+///
+/// * `trait_name` - Name of the preset trait (e.g., `IsMyPreset`)
+/// * `preset_type` - Type of the preset
+/// * `preset_generics` - Generic parameters for the preset
+/// * `delegate_entries` - Component delegation specifications
+///
+/// # Returns
+///
+/// Returns a vector of trait implementations, one for each component in
+/// the preset's delegation specifications.
 pub fn impl_components_is_preset(
     trait_name: &Ident,
     preset_type: &Type,
@@ -19,6 +39,27 @@ pub fn impl_components_is_preset(
         .collect()
 }
 
+/// Generates a single preset trait implementation for a component.
+///
+/// Creates the implementation that establishes that a specific component
+/// type can be used with the preset.
+///
+/// # Arguments
+///
+/// * `trait_name` - Name of the preset trait
+/// * `_preset_type` - Type of the preset (currently unused)
+/// * `_preset_generics` - Generic parameters for the preset (currently unused)
+/// * `component` - The component to implement the preset trait for
+///
+/// # Returns
+///
+/// Returns an implementation of the preset trait for the specified component.
+///
+/// # Note
+///
+/// The preset generic parameter may be absent if it is used as part of the
+/// component name's generic parameters. This is a known limitation that
+/// needs to be addressed in future updates.
 pub fn impl_component_is_preset(
     trait_name: &Ident,
     _preset_type: &Type,

@@ -1,3 +1,7 @@
+/// Implementation generation for component providers.
+///
+/// This module handles the generation of provider implementations that delegate
+/// component functionality to their underlying implementations.
 use proc_macro2::Span;
 use syn::punctuated::Punctuated;
 use syn::token::{Brace, Comma, For, Impl, Plus};
@@ -9,6 +13,42 @@ use syn::{
 use crate::derive_component::delegate_fn::derive_delegated_fn_impl;
 use crate::derive_component::delegate_type::derive_delegate_type_impl;
 
+/// Derives an implementation of a provider trait for a component.
+///
+/// This function generates the implementation that allows a component to delegate
+/// its functionality to an underlying type that implements the provider trait.
+///
+/// # Arguments
+/// * `provider_trait` - The trait defining the provider interface
+/// * `component_name` - Name of the component being implemented
+/// * `component_params` - Generic parameters for the component
+///
+/// # Returns
+/// * `ItemImpl` - The generated implementation block
+///
+/// # Generated Code Example
+/// ```ignore
+/// impl<Component, Context> MyProvider<Context> for Component
+/// where
+///     Component: DelegateComponent<MyComponent<T>>,
+///     Component::Delegate: MyProvider<Context>
+/// {
+///     // Delegated function implementations
+///     fn my_function(&self) -> Result<(), Error> {
+///         self.delegate().my_function()
+///     }
+///
+///     // Delegated associated type implementations
+///     type MyType = <Component::Delegate as MyProvider<Context>>::MyType;
+/// }
+/// ```
+///
+/// # Implementation Details
+/// The function:
+/// 1. Constructs generic parameters for the implementation
+/// 2. Adds necessary trait bounds for delegation
+/// 3. Generates delegating implementations for all trait items
+/// 4. Handles both associated functions and associated types
 pub fn derive_provider_impl(
     provider_trait: &ItemTrait,
     component_name: &Ident,

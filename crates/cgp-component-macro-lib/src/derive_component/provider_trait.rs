@@ -1,3 +1,7 @@
+/// Provider trait generation and transformation.
+///
+/// This module handles the generation of provider traits from consumer traits,
+/// including the transformation of self types and receivers into context types.
 use syn::punctuated::Punctuated;
 use syn::{parse_quote, Ident, ItemTrait, TraitItem};
 
@@ -6,6 +10,48 @@ use crate::derive_component::replace_self_type::{
     iter_parse_and_replace_self_type, parse_and_replace_self_type,
 };
 
+/// Derives a provider trait from a consumer trait definition.
+///
+/// This function transforms a consumer trait into a provider trait by:
+/// 1. Adding a context type parameter
+/// 2. Converting self-type references to context type references
+/// 3. Moving supertrait bounds to where clauses on the context type
+///
+/// # Arguments
+/// * `consumer_trait` - The original consumer trait to transform
+/// * `provider_name` - Name for the generated provider trait
+/// * `context_type` - Name of the context type parameter
+///
+/// # Returns
+/// * `syn::Result<ItemTrait>` - The generated provider trait
+///
+/// # Example Transformation
+/// From consumer trait:
+/// ```ignore
+/// trait MyComponent: SuperTrait {
+///     fn my_method(&self) -> Self::Output;
+///     type Output;
+/// }
+/// ```
+///
+/// To provider trait:
+/// ```ignore
+/// trait MyComponentProvider<Context>
+/// where
+///     Context: SuperTrait
+/// {
+///     fn my_method(&self, context: &Context) -> Self::Output;
+///     type Output;
+/// }
+/// ```
+///
+/// # Implementation Details
+/// The function performs these transformations:
+/// 1. Adds the context type parameter
+/// 2. Moves supertrait bounds to where clauses
+/// 3. Replaces self type references with context type
+/// 4. Transforms method signatures to accept context parameters
+/// 5. Preserves associated types while updating their bounds
 pub fn derive_provider_trait(
     consumer_trait: &ItemTrait,
     provider_name: &Ident,

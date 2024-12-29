@@ -1,3 +1,7 @@
+/// Core functionality for deriving component traits and implementations.
+///
+/// This module handles the generation of all necessary types and implementations
+/// for component-based programming patterns.
 use proc_macro2::TokenStream;
 use quote::ToTokens;
 use syn::ItemTrait;
@@ -8,6 +12,37 @@ use crate::derive_component::consumer_impl::derive_consumer_impl;
 use crate::derive_component::provider_impl::derive_provider_impl;
 use crate::derive_component::provider_trait::derive_provider_trait;
 
+/// Derives a complete component implementation from a trait definition.
+///
+/// This function is the main entry point for the component derivation process.
+/// It generates all the necessary types and implementations for a component:
+/// - A component name struct
+/// - A provider trait
+/// - Consumer implementations
+/// - Provider implementations
+///
+/// # Arguments
+/// * `attr` - Attribute tokens containing component specification
+/// * `item` - The input trait definition tokens
+///
+/// # Returns
+/// * `TokenStream` - Generated code containing all component implementations
+///
+/// # Generated Items
+/// For a component named 'MyComponent':
+/// ```ignore
+/// // Component name struct
+/// pub struct MyComponent;
+///
+/// // Provider trait
+/// pub trait MyComponentProvider<Context> { ... }
+///
+/// // Consumer implementation
+/// impl<T: MyComponentProvider<Context>> MyComponent for T { ... }
+///
+/// // Provider implementation
+/// impl<T> MyComponentProvider<Context> for T where T: Provider<MyComponent> { ... }
+/// ```
 pub fn derive_component(attr: TokenStream, item: TokenStream) -> TokenStream {
     let spec: ComponentSpec = syn::parse2(attr).unwrap();
 

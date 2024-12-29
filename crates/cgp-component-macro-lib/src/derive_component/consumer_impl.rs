@@ -1,3 +1,7 @@
+/// Implementation generation for component consumers.
+///
+/// This module handles the generation of consumer implementations that allow
+/// components to be used through a context type that has component capabilities.
 use syn::punctuated::Punctuated;
 use syn::token::{Brace, Comma, For, Impl, Plus};
 use syn::{
@@ -8,6 +12,43 @@ use syn::{
 use crate::derive_component::delegate_fn::derive_delegated_fn_impl;
 use crate::derive_component::delegate_type::derive_delegate_type_impl;
 
+/// Derives an implementation of a consumer trait for a context type.
+///
+/// This function generates the implementation that allows a context type to use
+/// component functionality through its component storage.
+///
+/// # Arguments
+/// * `consumer_trait` - The trait defining the consumer interface
+/// * `provider_name` - Name of the provider trait
+/// * `context_type` - The context type that will implement the consumer trait
+///
+/// # Returns
+/// * `ItemImpl` - The generated implementation block
+///
+/// # Generated Code Example
+/// ```ignore
+/// impl<Context, T> MyComponent<T> for Context
+/// where
+///     Context: HasComponents,
+///     Context::Components: MyComponentProvider<Context, T>
+/// {
+///     // Delegated function implementations
+///     fn my_function(&self) -> Result<(), Error> {
+///         self.components().my_function()
+///     }
+///
+///     // Delegated associated type implementations
+///     type MyType = <Context::Components as MyComponentProvider<Context, T>>::MyType;
+/// }
+/// ```
+///
+/// # Implementation Details
+/// The function:
+/// 1. Constructs generic parameters for the implementation
+/// 2. Adds necessary trait bounds for component access
+/// 3. Generates delegating implementations for all trait items
+/// 4. Handles both associated functions and associated types
+/// 5. Preserves and propagates any supertraits from the consumer trait
 pub fn derive_consumer_impl(
     consumer_trait: &ItemTrait,
     provider_name: &Ident,
